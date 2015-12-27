@@ -15,11 +15,11 @@ then
       mapfile -t links < <(curl -s "https://twitter.com/i/profiles/show/${username}/media_timeline?include_available_features=1&include_entities=1&reset_error_state=false" | sed -e 's/\\n/\n/g' -e 's/\\//g' | grep -e "data-src" -e "img src" | sed -e 's/.*data-src="/https:\/\/twitter.com/g' -e 's/\?.*//g' -e 's/.*img src="//g' -e 's/".*//g')
       for i in "${links[@]}"
       do
-            if [[ "$i" =~ ".jpg" ]]
+            if echo "$i" | grep -i -e "\....$" > /dev/null
             then
                wget -nc "$i"
             else
-               youtube-dl -i "$i"
+               youtube-dl --ignore-config -w --no-part -i "$i"
             fi
       done
    fi
