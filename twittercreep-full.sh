@@ -16,11 +16,11 @@ then
       maxid=$(curl -s "https://twitter.com/i/profiles/show/${username}/media_timeline?include_available_features=1&include_entities=1&reset_error_state=false" | sed -e 's/\\n/\n/g' -e 's/\\//g' | grep data-tweet-id | tail -n 1 | sed -e 's/.*="//g' -e 's/".*//g')
       for i in "${links[@]}"
       do
-            if [[ "$i" =~ ".jpg" ]]
+            if echo "$i" | grep -i -e "\....$" > /dev/null
             then
                wget -nc "$i"
             else
-               youtube-dl --ignore-config -i "$i"
+               youtube-dl --ignore-config -w --no-part -i "$i"
             fi
       done
       until [[ "$maxid" == "" ]]
@@ -29,11 +29,11 @@ then
          maxid=$(curl -s "https://twitter.com/i/profiles/show/${username}/media_timeline?include_available_features=1&include_entities=1&max_position=${maxid}&reset_error_state=false" | sed -e 's/\\n/\n/g' -e 's/\\//g' | grep min_position | sed -e 's/.*position"\:"//g' -e 's/".*//g')
          for i in "${links[@]}"
          do
-            if [[ "$i" =~ ".jpg" ]]
+            if echo "$i" | grep -i -e "\....$" > /dev/null
             then
                wget -nc "$i"
             else
-               youtube-dl --ignore-config -i "$i"
+               youtube-dl --ignore-config -w --no-part -i "$i"
             fi
          done
          sleep 1
