@@ -32,4 +32,4 @@ twittercreep-full.sh bootstraps the backup, grabbing all posts.  May only need t
 
 twittercreep.sh monitors the last 20 posts of the user for updates.  Checks in a range of 45 seconds and 6m45s.
 
-twittercreep will populate your savepath with a simple directory structure with the usernames supplied.
+twittercreep will populate your savepath with a simple directory structure with the usernames supplied.  Anything with a file extension, .jpg, .png, etc., will be downloaded with wget.  The rest gets thrown to youtube-dl.
